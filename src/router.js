@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Coco from './views/Coco.vue'
 
 Vue.use(Router)
 
@@ -8,6 +9,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'coco',
+      component: Coco
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Home
     },
