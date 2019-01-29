@@ -1,6 +1,6 @@
 <template>
   <div class="coco">
-    <span v-text="frames"></span>
+    <span v-text="status"></span>
     <video class="size" autoplay playsinline muted ref="video" width="500" height="500"/>
     <canvas @click="capture" class="size" ref="canvas" width="500" height="500"/>
   </div>
@@ -18,6 +18,7 @@ export default {
       video: {},
       stream: {},
       canvas: {},
+      status: 'Загрузка...',
       frames: 0,
       captures: []
     }
@@ -46,11 +47,14 @@ export default {
           alert(JSON.stringify(error))
         })
       const modelPromise = cocoSsd.load()
+      this.status = 'Загрузка модели...'
       Promise.all([modelPromise, webCamPromise])
         .then(values => {
+          this.status = 'Модель загружена'
           this.detectFrame(this.$refs.video, values[0])
         })
         .catch(error => {
+          this.status = 'Ошибка: ' + JSON.stringify(error)
           console.error(error)
           alert(JSON.stringify(error))
         })
